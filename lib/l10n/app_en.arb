@@ -1,0 +1,72 @@
+{
+  "@@locale": "en",
+  "appTitle": "SağlıkBul",
+  "splashTagline": "Find trusted healthcare providers",
+  "providersTitle": "Providers",
+  "filtersTitle": "Filters",
+  "providerDetailsTitle": "Provider Details",
+  "searchHint": "Search by name, category, city...",
+  "listResultCount": "{count, plural, =0{No providers} =1{1 provider} other{{count} providers}}",
+  "@listResultCount": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "filtersTooltip": "Filters",
+  "clear": "Clear",
+  "applyAndBack": "Apply & Back",
+  "filtersSheetSubtitle": "Refine by location and specialty",
+  "showResults": "Show {count} results",
+  "@showResults": {
+    "placeholders": {
+      "count": {"type": "int"}
+    }
+  },
+  "filterAll": "All",
+  "filterCountry": "Country",
+  "filterCity": "City",
+  "filterCategory": "Category / Branch",
+  "filterSectionLocation": "Location",
+  "filterSectionSpecialty": "Specialty",
+  "filterSearchCountry": "Search country...",
+  "filterSearchCity": "Search city...",
+  "filterSearchCategory": "Search branch or category...",
+  "filterSearchNoResults": "No matches found",
+  "filtersActiveHint": "Filters apply instantly as you select",
+  "activeFiltersLabel": "Active filters",
+  "clearAllFilters": "Clear all",
+  "retry": "Retry",
+  "errorTitle": "Something went wrong",
+  "errorGeneric": "Something went wrong. Please try again.",
+  "offlineError": "You appear to be offline. Check your connection.",
+  "networkError": "Unable to load providers. Please try again.",
+  "profileLoadErrorTitle": "Could not load profile",
+  "emptyProvidersTitle": "No providers found",
+  "emptyProvidersSubtitle": "Try adjusting your search or filters",
+  "providerNotFoundTitle": "Provider not found",
+  "providerNotFoundSubtitle": "This profile may have been removed",
+  "offlineBannerMessage": "Showing saved results — connection unavailable",
+  "contactUnavailable": "Contact information not available",
+  "about": "About",
+  "location": "Location",
+  "rating": "Rating",
+  "phone": "Phone",
+  "email": "Email",
+  "callAction": "Call",
+  "emailAction": "Send email",
+  "detailOverviewSection": "Overview",
+  "contactSectionTitle": "Contact",
+  "launchContactError": "Could not open this link on your device",
+  "notFoundPageTitle": "Page not found",
+  "notFoundPageSubtitle": "The route you requested does not exist.",
+  "goToProviders": "Go to providers",
+  "providerCardSemanticLabel": "{name}, {category}, {city}, rating {rating}",
+  "@providerCardSemanticLabel": {
+    "placeholders": {
+      "name": {"type": "String"},
+      "category": {"type": "String"},
+      "city": {"type": "String"},
+      "rating": {"type": "String"}
+    }
+  }
+}

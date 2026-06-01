@@ -1,0 +1,84 @@
+{
+  "@@locale": "tr",
+  "appTitle": "SağlıkBul",
+  "splashTagline": "Güvenilir sağlık hizmetlerini keşfet",
+  "providersTitle": "Sağlayıcılar",
+  "filtersTitle": "Filtreler",
+  "providerDetailsTitle": "Sağlayıcı Detayı",
+  "searchHint": "İsim, kategori veya şehir ara...",
+  "listResultCount": "{count, plural, =0{Sağlayıcı yok} =1{1 sağlayıcı} other{{count} sağlayıcı}}",
+  "@listResultCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filtersTooltip": "Filtreler",
+  "clear": "Temizle",
+  "applyAndBack": "Uygula ve Geri",
+  "filtersSheetSubtitle": "Konum ve branşa göre daralt",
+  "showResults": "{count} sonuç göster",
+  "@showResults": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "filterAll": "Tümü",
+  "filterCountry": "Ülke",
+  "filterCity": "Şehir",
+  "filterCategory": "Branş / Kategori",
+  "filterSectionLocation": "Konum",
+  "filterSectionSpecialty": "Branş",
+  "filterSearchCountry": "Ülke ara...",
+  "filterSearchCity": "Şehir ara...",
+  "filterSearchCategory": "Branş veya kategori ara...",
+  "filterSearchNoResults": "Sonuç bulunamadı",
+  "filtersActiveHint": "Seçimler anında uygulanır",
+  "activeFiltersLabel": "Aktif filtreler",
+  "clearAllFilters": "Tümünü temizle",
+  "retry": "Tekrar Dene",
+  "errorTitle": "Bir şeyler ters gitti",
+  "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
+  "offlineError": "Çevrimdışı görünüyorsunuz. Bağlantınızı kontrol edin.",
+  "networkError": "Sağlayıcılar yüklenemedi. Lütfen tekrar deneyin.",
+  "profileLoadErrorTitle": "Profil yüklenemedi",
+  "emptyProvidersTitle": "Sağlayıcı bulunamadı",
+  "emptyProvidersSubtitle": "Arama veya filtreleri değiştirmeyi deneyin",
+  "providerNotFoundTitle": "Sağlayıcı bulunamadı",
+  "providerNotFoundSubtitle": "Bu profil kaldırılmış olabilir",
+  "offlineBannerMessage": "Kayıtlı sonuçlar gösteriliyor — bağlantı yok",
+  "contactUnavailable": "İletişim bilgisi mevcut değil",
+  "about": "Hakkında",
+  "location": "Konum",
+  "rating": "Puan",
+  "phone": "Telefon",
+  "email": "E-posta",
+  "callAction": "Ara",
+  "emailAction": "E-posta gönder",
+  "detailOverviewSection": "Genel Bakış",
+  "contactSectionTitle": "İletişim",
+  "launchContactError": "Bağlantı bu cihazda açılamadı",
+  "notFoundPageTitle": "Sayfa bulunamadı",
+  "notFoundPageSubtitle": "İstediğiniz sayfa mevcut değil.",
+  "goToProviders": "Sağlayıcılara git",
+  "providerCardSemanticLabel": "{name}, {category}, {city}, puan {rating}",
+  "@providerCardSemanticLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "category": {
+        "type": "String"
+      },
+      "city": {
+        "type": "String"
+      },
+      "rating": {
+        "type": "String"
+      }
+    }
+  }
+}
