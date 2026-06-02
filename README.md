@@ -20,12 +20,12 @@ Filter is implemented as a bottom sheet (not `/filter`) to keep list context and
 ## Architecture
 
 ```
-View → Riverpod → ProviderRepository → MockProviderRepository + ConnectivityService
+View → Riverpod → ProviderRepository → MockProviderRepository (mock data + offline simulator)
 ```
 
 - **View** — Screens under `features/*/view`; UI in `widgets/` and `core/widgets/`.
 - **State** — Riverpod notifiers and derived providers; no separate ViewModel classes.
-- **Data** — `ProviderRepository` interface; mock implementation with in-memory cache and offline simulation.
+- **Data** — `ProviderRepository` interface; mock-only data with in-memory cache. No backend.
 - **Models** — `ProviderProfile` (Freezed); name avoids clash with Riverpod `Provider`.
 
 ## State management
@@ -52,7 +52,7 @@ Filtering logic is pure Dart (`provider_filter_logic.dart`) and covered by unit 
 
 ```
 lib/
-├── core/          # theme, errors, connectivity, shared widgets
+├── core/          # theme, errors, offline simulator, shared widgets
 ├── data/          # models, repository, mock seeds
 ├── features/provider/
 │   ├── list/
@@ -82,6 +82,6 @@ Unit and widget tests: filter logic, repository, list/detail notifiers, key widg
 
 ## Notes for reviewers
 
-- **Offline / retry:** `MockConnectivityService.online`; pull-to-refresh on list; retry on detail. Optional initial error: `simulateInitialError: true` in `repository_provider.dart`.
+- **Offline / retry (bonus):** `MockOfflineSimulator.isOnline` toggles simulated offline; pull-to-refresh and retry on detail. Optional load failure: `simulateInitialError: true` in `repository_provider.dart`.
 - **Locale:** EN \| TR toggle in the list app bar; mock content is bilingual.
 - **CI:** `.github/workflows/ci.yml` — analyze and test on push/PR.

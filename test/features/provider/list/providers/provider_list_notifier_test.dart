@@ -3,8 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider_search/core/providers/locale_provider.dart';
 import 'package:provider_search/core/errors/app_exception.dart';
-import 'package:provider_search/core/network/connectivity_service.dart';
-import 'package:provider_search/core/providers/connectivity_provider.dart';
+import 'package:provider_search/core/offline/offline_simulator.dart';
+import 'package:provider_search/core/providers/offline_simulator_provider.dart';
 import 'package:provider_search/core/providers/repository_provider.dart';
 import 'package:provider_search/data/mock/mock_provider_repository.dart';
 import 'package:provider_search/features/provider/list/providers/list_stale_data_provider.dart';
@@ -12,17 +12,17 @@ import 'package:provider_search/features/provider/list/providers/provider_list_n
 
 void main() {
   group('ProviderListNotifier', () {
-    late MockConnectivityService connectivity;
+    late MockOfflineSimulator offlineSimulator;
 
     ProviderContainer createContainer() {
-      connectivity = MockConnectivityService(online: true);
+      offlineSimulator = MockOfflineSimulator(isOnline: true);
       return ProviderContainer(
         overrides: [
           appLocaleProvider.overrideWith((ref) => const Locale('en')),
-          connectivityServiceProvider.overrideWithValue(connectivity),
+          offlineSimulatorProvider.overrideWithValue(offlineSimulator),
           providerRepositoryProvider.overrideWith(
             (ref) => MockProviderRepository(
-              connectivity: ref.watch(connectivityServiceProvider),
+              offlineSimulator: ref.watch(offlineSimulatorProvider),
               loadingDelay: Duration.zero,
             ),
           ),
@@ -64,7 +64,7 @@ void main() {
       await container.read(providerListNotifierProvider.future);
       final cached = container.read(providerListNotifierProvider).value!;
 
-      connectivity.online = false;
+      offlineSimulator.isOnline = false;
       await container.read(providerListNotifierProvider.notifier).refresh();
 
       expect(container.read(providerListNotifierProvider).value, cached);
@@ -72,14 +72,14 @@ void main() {
     });
 
     test('refresh surfaces error when offline on first load', () async {
-      connectivity = MockConnectivityService(online: false);
+      offlineSimulator = MockOfflineSimulator(isOnline: false);
       final container = ProviderContainer(
         overrides: [
           appLocaleProvider.overrideWith((ref) => const Locale('en')),
-          connectivityServiceProvider.overrideWithValue(connectivity),
+          offlineSimulatorProvider.overrideWithValue(offlineSimulator),
           providerRepositoryProvider.overrideWith(
             (ref) => MockProviderRepository(
-              connectivity: ref.watch(connectivityServiceProvider),
+              offlineSimulator: ref.watch(offlineSimulatorProvider),
               loadingDelay: Duration.zero,
             ),
           ),

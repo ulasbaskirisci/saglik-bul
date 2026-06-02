@@ -43,7 +43,7 @@
   "errorTitle": "Bir şeyler ters gitti",
   "errorGeneric": "Bir şeyler ters gitti. Lütfen tekrar deneyin.",
   "offlineError": "Çevrimdışı görünüyorsunuz. Bağlantınızı kontrol edin.",
-  "networkError": "Sağlayıcılar yüklenemedi. Lütfen tekrar deneyin.",
+  "loadFailed": "Sağlayıcılar yüklenemedi. Lütfen tekrar deneyin.",
   "profileLoadErrorTitle": "Profil yüklenemedi",
   "emptyProvidersTitle": "Sağlayıcı bulunamadı",
   "emptyProvidersSubtitle": "Arama veya filtreleri değiştirmeyi deneyin",

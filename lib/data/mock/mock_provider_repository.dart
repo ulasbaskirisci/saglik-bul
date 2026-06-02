@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
 
 import '../../core/errors/app_exception.dart';
-import '../../core/network/connectivity_service.dart';
+import '../../core/offline/offline_simulator.dart';
 import '../models/provider_profile.dart';
 import '../repositories/provider_repository.dart';
 import 'mock_provider_localizer.dart';
 
 class MockProviderRepository implements ProviderRepository {
   MockProviderRepository({
-    required ConnectivityService connectivity,
+    required OfflineSimulator offlineSimulator,
     this.loadingDelay = const Duration(milliseconds: 800),
     this.simulateInitialError = false,
-  }) : _connectivity = connectivity;
+  }) : _offlineSimulator = offlineSimulator;
 
-  final ConnectivityService _connectivity;
+  final OfflineSimulator _offlineSimulator;
   final Duration loadingDelay;
   final bool simulateInitialError;
 
@@ -23,7 +23,7 @@ class MockProviderRepository implements ProviderRepository {
 
   @override
   Future<List<ProviderProfile>> fetchProviders({required Locale locale}) async {
-    await _ensureOnline();
+    await _ensureAvailable();
     final switchingLanguage = _cachedLanguageCode != null &&
         _cachedLanguageCode != locale.languageCode;
     await Future<void>.delayed(
@@ -32,7 +32,7 @@ class MockProviderRepository implements ProviderRepository {
 
     if (simulateInitialError && !_initialErrorConsumed) {
       _initialErrorConsumed = true;
-      throw const NetworkException();
+      throw const LoadFailedException();
     }
 
     final result = List<ProviderProfile>.unmodifiable(
@@ -53,7 +53,7 @@ class MockProviderRepository implements ProviderRepository {
       if (cached != null) return cached;
     }
 
-    await _ensureOnline();
+    await _ensureAvailable();
     await Future<void>.delayed(const Duration(milliseconds: 200));
 
     try {
@@ -72,8 +72,8 @@ class MockProviderRepository implements ProviderRepository {
     return null;
   }
 
-  Future<void> _ensureOnline() async {
-    if (!await _connectivity.isOnline) {
+  Future<void> _ensureAvailable() async {
+    if (!await _offlineSimulator.isAvailable) {
       throw const OfflineException();
     }
   }

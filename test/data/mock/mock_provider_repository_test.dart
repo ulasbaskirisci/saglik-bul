@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:provider_search/core/errors/app_exception.dart';
-import 'package:provider_search/core/network/connectivity_service.dart';
+import 'package:provider_search/core/offline/offline_simulator.dart';
 import 'package:provider_search/data/mock/mock_provider_repository.dart';
 
 void main() {
   group('MockProviderRepository', () {
     test('fetchProviders returns mock data when online', () async {
       final repository = MockProviderRepository(
-        connectivity: MockConnectivityService(online: true),
+        offlineSimulator: MockOfflineSimulator(isOnline: true),
         loadingDelay: Duration.zero,
       );
 
@@ -20,7 +20,7 @@ void main() {
 
     test('returns Turkish names when locale is tr', () async {
       final repository = MockProviderRepository(
-        connectivity: MockConnectivityService(online: true),
+        offlineSimulator: MockOfflineSimulator(isOnline: true),
         loadingDelay: Duration.zero,
       );
 
@@ -33,7 +33,7 @@ void main() {
 
     test('fetchProviders throws OfflineException when offline', () async {
       final repository = MockProviderRepository(
-        connectivity: MockConnectivityService(online: false),
+        offlineSimulator: MockOfflineSimulator(isOnline: false),
         loadingDelay: Duration.zero,
       );
 
@@ -45,14 +45,14 @@ void main() {
 
     test('simulateInitialError throws once then succeeds', () async {
       final repository = MockProviderRepository(
-        connectivity: MockConnectivityService(online: true),
+        offlineSimulator: MockOfflineSimulator(isOnline: true),
         loadingDelay: Duration.zero,
         simulateInitialError: true,
       );
 
       expect(
         repository.fetchProviders(locale: const Locale('en')),
-        throwsA(isA<NetworkException>()),
+        throwsA(isA<LoadFailedException>()),
       );
 
       final providers =
@@ -62,14 +62,14 @@ void main() {
 
     test('getProviderById reads from memory cache when list was fetched',
         () async {
-      final connectivity = MockConnectivityService(online: true);
+      final offlineSimulator = MockOfflineSimulator(isOnline: true);
       final repository = MockProviderRepository(
-        connectivity: connectivity,
+        offlineSimulator: offlineSimulator,
         loadingDelay: Duration.zero,
       );
 
       final all = await repository.fetchProviders(locale: const Locale('en'));
-      connectivity.online = false;
+      offlineSimulator.isOnline = false;
 
       final found = await repository.getProviderById(
         all.first.id,
@@ -81,7 +81,7 @@ void main() {
 
     test('getProviderById returns provider or null', () async {
       final repository = MockProviderRepository(
-        connectivity: MockConnectivityService(online: true),
+        offlineSimulator: MockOfflineSimulator(isOnline: true),
         loadingDelay: Duration.zero,
       );
 

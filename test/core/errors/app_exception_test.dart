@@ -5,7 +5,7 @@ import 'package:provider_search/core/errors/error_messages.dart';
 import 'package:provider_search/l10n/app_localizations.dart';
 
 void main() {
-  test('localized messages map offline and network exceptions', () {
+  test('localized messages map offline and load-failed exceptions', () {
     final l10n = lookupAppLocalizations(const Locale('en'));
 
     expect(
@@ -13,8 +13,8 @@ void main() {
       l10n.offlineError,
     );
     expect(
-      localizedErrorMessage(l10n, const NetworkException()),
-      l10n.networkError,
+      localizedErrorMessage(l10n, const LoadFailedException()),
+      l10n.loadFailed,
     );
   });
 

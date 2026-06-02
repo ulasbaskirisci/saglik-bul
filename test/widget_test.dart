@@ -1,22 +1,22 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:provider_search/core/network/connectivity_service.dart';
-import 'package:provider_search/core/providers/connectivity_provider.dart';
+import 'package:provider_search/core/offline/offline_simulator.dart';
+import 'package:provider_search/core/providers/offline_simulator_provider.dart';
 import 'package:provider_search/core/providers/repository_provider.dart';
 import 'package:provider_search/data/mock/mock_provider_repository.dart';
 import 'package:provider_search/main.dart';
 
 void main() {
   testWidgets('App smoke test', (tester) async {
-    final connectivity = MockConnectivityService(online: true);
+    final offlineSimulator = MockOfflineSimulator(isOnline: true);
 
     await tester.pumpWidget(
       ProviderScope(
         overrides: [
-          connectivityServiceProvider.overrideWithValue(connectivity),
+          offlineSimulatorProvider.overrideWithValue(offlineSimulator),
           providerRepositoryProvider.overrideWith(
             (ref) => MockProviderRepository(
-              connectivity: connectivity,
+              offlineSimulator: offlineSimulator,
               loadingDelay: Duration.zero,
             ),
           ),

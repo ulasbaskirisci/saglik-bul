@@ -107,7 +107,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get offlineError => 'You appear to be offline. Check your connection.';
 
   @override
-  String get networkError => 'Unable to load providers. Please try again.';
+  String get loadFailed => 'Unable to load providers. Please try again.';
 
   @override
   String get profileLoadErrorTitle => 'Could not load profile';

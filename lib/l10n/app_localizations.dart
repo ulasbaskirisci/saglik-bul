@@ -269,11 +269,11 @@ abstract class AppLocalizations {
   /// **'You appear to be offline. Check your connection.'**
   String get offlineError;
 
-  /// No description provided for @networkError.
+  /// No description provided for @loadFailed.
   ///
   /// In en, this message translates to:
   /// **'Unable to load providers. Please try again.'**
-  String get networkError;
+  String get loadFailed;
 
   /// No description provided for @profileLoadErrorTitle.
   ///

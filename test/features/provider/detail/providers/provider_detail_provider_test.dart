@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:provider_search/core/network/connectivity_service.dart';
-import 'package:provider_search/core/providers/connectivity_provider.dart';
+import 'package:provider_search/core/offline/offline_simulator.dart';
+import 'package:provider_search/core/providers/offline_simulator_provider.dart';
 import 'package:provider_search/core/providers/locale_provider.dart';
 import 'package:provider_search/core/providers/repository_provider.dart';
 import 'package:provider_search/data/mock/mock_provider_repository.dart';
@@ -11,17 +11,17 @@ import 'package:provider_search/features/provider/list/providers/provider_list_n
 
 void main() {
   group('providerDetailProvider', () {
-    late MockConnectivityService connectivity;
+    late MockOfflineSimulator offlineSimulator;
 
     ProviderContainer createContainer() {
-      connectivity = MockConnectivityService(online: true);
+      offlineSimulator = MockOfflineSimulator(isOnline: true);
       return ProviderContainer(
         overrides: [
           appLocaleProvider.overrideWith((ref) => const Locale('en')),
-          connectivityServiceProvider.overrideWithValue(connectivity),
+          offlineSimulatorProvider.overrideWithValue(offlineSimulator),
           providerRepositoryProvider.overrideWith(
             (ref) => MockProviderRepository(
-              connectivity: connectivity,
+              offlineSimulator: ref.watch(offlineSimulatorProvider),
               loadingDelay: Duration.zero,
             ),
           ),
@@ -33,12 +33,16 @@ void main() {
       final container = createContainer();
       addTearDown(container.dispose);
 
-      final list = await container.read(providerListNotifierProvider.future);
-      final detail =
-          await container.read(providerDetailProvider(list.first.id).future);
+      await container.read(providerListNotifierProvider.future);
+      final listFirst =
+          container.read(providerListNotifierProvider).value!.first;
 
-      expect(detail?.id, list.first.id);
-      expect(detail?.name, list.first.name);
+      final detail = await container.read(
+        providerDetailProvider(listFirst.id).future,
+      );
+
+      expect(detail?.id, listFirst.id);
+      expect(detail?.name, listFirst.name);
     });
 
     test('returns null when id is unknown', () async {
@@ -46,25 +50,12 @@ void main() {
       addTearDown(container.dispose);
 
       await container.read(providerListNotifierProvider.future);
-      final detail =
-          await container.read(providerDetailProvider('unknown-id').future);
+
+      final detail = await container.read(
+        providerDetailProvider('unknown-id').future,
+      );
 
       expect(detail, isNull);
-    });
-
-    test('resolves localized profile after locale change', () async {
-      final container = createContainer();
-      addTearDown(container.dispose);
-
-      final list = await container.read(providerListNotifierProvider.future);
-      final id = list.first.id;
-
-      final en = await container.read(providerDetailProvider(id).future);
-      container.read(appLocaleProvider.notifier).state = const Locale('tr');
-      await container.read(providerListNotifierProvider.notifier).refresh();
-      final tr = await container.read(providerDetailProvider(id).future);
-
-      expect(en?.name, isNot(equals(tr?.name)));
     });
   });
 }

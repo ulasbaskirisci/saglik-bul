@@ -4,7 +4,7 @@ import 'app_exception.dart';
 String localizedErrorMessage(AppLocalizations l10n, Object error) {
   return switch (error) {
     OfflineException() => l10n.offlineError,
-    NetworkException() => l10n.networkError,
+    LoadFailedException() => l10n.loadFailed,
     _ => l10n.errorGeneric,
   };
 }

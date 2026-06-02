@@ -107,7 +107,7 @@ class AppLocalizationsTr extends AppLocalizations {
   String get offlineError => 'Çevrimdışı görünüyorsunuz. Bağlantınızı kontrol edin.';
 
   @override
-  String get networkError => 'Sağlayıcılar yüklenemedi. Lütfen tekrar deneyin.';
+  String get loadFailed => 'Sağlayıcılar yüklenemedi. Lütfen tekrar deneyin.';
 
   @override
   String get profileLoadErrorTitle => 'Profil yüklenemedi';
